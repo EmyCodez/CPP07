@@ -3,28 +3,56 @@
 
 int main() {
     try {
+        // Test default constructor
         Array<int> empty;
         std::cout << "Empty array size: " << empty.size() << std::endl;
 
-        Array<int> numbers(5);
-        for (unsigned int i = 0; i < numbers.size(); ++i)
-            numbers[i] = i * 10;
+        // Test constructor with size
+        Array<int> arr(5);
+        std::cout << "Array size: " << arr.size() << std::endl;
 
-        std::cout << "Numbers array: ";
-        for (unsigned int i = 0; i < numbers.size(); ++i)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
+        // Test element access and modification
+        for (unsigned int i = 0; i < arr.size(); i++) {
+            arr[i] = i * 2;
+        }
 
         // Test copy constructor
-        Array<int> copy = numbers;
-        numbers[0] = 100;
-        std::cout << "Original[0] = " << numbers[0] << ", Copy[0] = " << copy[0] << std::endl;
+        Array<int> copy(arr);
+        copy[0] = 42; // Modify copy
+        std::cout << "Original[0]: " << arr[0] << ", Copy[0]: " << copy[0] << std::endl;
 
-        // Test out of bounds
-        std::cout << "Accessing out of bounds..." << std::endl;
-        std::cout << numbers[10] << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "Caught exception: " << e.what() << std::endl;
+        // Test assignment operator
+        Array<int> assign;
+        assign = arr;
+        assign[1] = 99; // Modify assigned array
+        std::cout << "Original[1]: " << arr[1] << ", Assigned[1]: " << assign[1] << std::endl;
+
+        // Test out of bounds access
+        std::cout << arr[10] << std::endl; // Should throw exception
+    }
+    catch (const Array<int>::OutOfBoundsException& e) {
+        std::cout << "Exception caught: " << e.what() << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Standard exception: " << e.what() << std::endl;
+    }
+    catch (...) {
+        std::cout << "Unknown exception caught" << std::endl;
+    }
+
+    // Test with different type
+    try {
+        Array<std::string> strArr(3);
+        strArr[0] = "Hello";
+        strArr[1] = "World";
+        strArr[2] = "!";
+        for (unsigned int i = 0; i < strArr.size(); i++) {
+            std::cout << strArr[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+    catch (const Array<std::string>::OutOfBoundsException& e) {
+        std::cout << "Exception caught: " << e.what() << std::endl;
     }
 
     return 0;

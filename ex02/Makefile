@@ -1,7 +1,7 @@
 NAME = array
 
 SRC = main.cpp
-DEP = Array.hpp
+DEP = Array.hpp Array.tpp
 
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
